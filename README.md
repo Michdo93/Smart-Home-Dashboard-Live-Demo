@@ -1,2 +1,53 @@
-# Smart-Home-Dashboard-Live-Demo
-Öffentliche Live-Demo des Smart-Home-Dashboards auf GitHub Pages über cloudflare-openhab-rest-proxy – Begleit-Repo zum Buch „openHAB Online Demos“
+# Smart-Home-Dashboard – Live-Demo
+
+**→ <https://michdo93.github.io/Smart-Home-Dashboard-Live-Demo/>**
+
+Öffentliche Live-Demo des [Smart-Home-Dashboards](https://github.com/Michdo93/Smart-Home-Dashboard). Begleit-Repo zum Buch *openHAB Online Demos*.
+
+Die Demo ist mit einem openHAB 5 verbunden, auf dem das [virtuelle Haus](https://github.com/Michdo93/openHAB-Virtual-Smart-Home) läuft: Lampen, Heizung, Rollläden, Geräte – alles simuliert, nichts davon steht in einer echten Wohnung. Was Sie schalten, sehen andere Besucher live mit.
+
+## Aufbau
+
+```text
+GitHub Pages (dieses Repo)      Cloudflare Worker              myopenHAB        Proxmox-VM
+Dashboard + js-openhab-     →   cloudflare-openhab-rest-   →   Cloud       →    openHAB 5
+proxy-client, ohne              proxy: Freigaben, Prüfung      Connector        virtuelles Haus
+Zugangsdaten                    der Befehle, Ratenbegrenzung
+```
+
+## Was dieses Repo enthält
+
+Nicht das Dashboard selbst, sondern nur die Anpassung an die Demo:
+
+| Datei | Inhalt |
+|---|---|
+| `config.demo.js` | Adresse des Proxys und Titel; wird an `config.js` des Dashboards angehängt |
+| `anpassen.sh` | tauscht `js-openhab-rest-client` gegen `js-openhab-proxy-client` und hängt `config.demo.js` an |
+| `.github/workflows/pages.yml` | holt Dashboard und Proxy-Client, ruft `anpassen.sh` auf, veröffentlicht auf GitHub Pages |
+
+Der Code des Dashboards bleibt unverändert – beide Bibliotheken haben dieselbe Schnittstelle. Die Demo übernimmt den Stand von `main` des Dashboards bei jedem Push hierher, von Hand (Actions → *Live-Demo veröffentlichen* → *Run workflow*) und montags automatisch.
+
+## Eigene Demo
+
+1. Repo forken oder als Vorlage nutzen.
+2. Proxy einrichten: [cloudflare-openhab-rest-proxy](https://github.com/Michdo93/cloudflare-openhab-rest-proxy), mit `https://<name>.github.io` in den erlaubten Origins.
+3. In `config.demo.js` die Adresse des eigenen Workers eintragen.
+4. *Settings → Pages → Source:* **GitHub Actions** wählen.
+5. Workflow starten.
+
+Lokal ausprobieren, ohne zu veröffentlichen:
+
+```bash
+git clone https://github.com/Michdo93/Smart-Home-Dashboard site
+git clone https://github.com/Michdo93/js-openhab-proxy-client proxy-client
+./anpassen.sh site proxy-client
+cd site && python3 -m http.server 5173      # http://localhost:5173
+```
+
+## Was Besucher dürfen
+
+Der Proxy entscheidet, nicht diese Seite: alle Items des virtuellen Hauses lesen, Befehle nur an Bedienelemente der Sitemap und nur mit passenden Werten (z. B. Solltemperatur 16–26 °C), höchstens 20 Befehle pro Minute. Zugangsdaten stehen weder hier noch im Browser.
+
+## Lizenz
+
+MIT – siehe [LICENSE](LICENSE).
