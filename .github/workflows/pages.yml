@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: Michdo93/js-openhab-proxy-client
-          ref: 4f0a29cb48f4b27db2701071dfc6e8a59ed89517
+          ref: 613da0d7e4ccceac593d85a8b95778371212602d
           path: proxy-client
 
       - name: Auf den Proxy umstellen
