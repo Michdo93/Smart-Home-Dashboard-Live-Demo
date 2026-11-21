@@ -48,6 +48,12 @@ cd site && python3 -m http.server 5173      # http://localhost:5173
 
 Der Proxy entscheidet, nicht diese Seite: alle Items des virtuellen Hauses lesen, Befehle nur an Bedienelemente der Sitemap und nur mit passenden Werten (z. B. Solltemperatur 16–26 °C), höchstens 20 Befehle pro Minute. Zugangsdaten stehen weder hier noch im Browser.
 
+## Unterstützen
+
+Wenn Ihnen dieses Projekt hilft, freue ich mich über einen Kaffee:
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/Michdo93)
+
 ## Lizenz
 
 MIT – siehe [LICENSE](LICENSE).
