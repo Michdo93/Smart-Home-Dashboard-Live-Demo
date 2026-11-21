@@ -6,6 +6,20 @@
 
 Die Demo ist mit einem openHAB 5 verbunden, auf dem das [virtuelle Haus](https://github.com/Michdo93/openHAB-Virtual-Smart-Home) läuft: Lampen, Heizung, Rollläden, Geräte – alles simuliert, nichts davon steht in einer echten Wohnung. Was Sie schalten, sehen andere Besucher live mit.
 
+## Weitere Online-Demos
+
+Diese Demo enthält die Themes `standard`, `glas` und `eink` (Zahnrad → Design). Jedes Design gibt es außerdem als eigene Demo:
+
+| Design | Demo |
+|---|---|
+| standard | <https://michdo93.github.io/smart-home-dashboard-theme-standard-live-demo/> |
+| glas | <https://michdo93.github.io/smart-home-dashboard-theme-glas-live-demo/> |
+| eink | <https://michdo93.github.io/smart-home-dashboard-theme-eink-live-demo/> |
+| Bootstrap 5 (Ansicht) | <https://michdo93.github.io/smart-home-dashboard-theme-bootstrap-live-demo/> |
+| Material Design 3 (Ansicht) | <https://michdo93.github.io/smart-home-dashboard-theme-material-live-demo/> |
+
+Alle nutzen denselben Proxy und dasselbe virtuelle Haus.
+
 ## Aufbau
 
 ```text
@@ -22,8 +36,8 @@ Nicht das Dashboard selbst, sondern nur die Anpassung an die Demo:
 | Datei | Inhalt |
 |---|---|
 | `config.demo.js` | Adresse des Proxys und Titel; wird an `config.js` des Dashboards angehängt |
-| `anpassen.sh` | tauscht `js-openhab-rest-client` gegen `js-openhab-proxy-client` und hängt `config.demo.js` an |
-| `.github/workflows/pages.yml` | holt Dashboard und Proxy-Client, ruft `anpassen.sh` auf, veröffentlicht auf GitHub Pages |
+| `anpassen.sh` | tauscht `js-openhab-rest-client` gegen `js-openhab-proxy-client`, installiert die Themes glas und eink und hängt `config.demo.js` an |
+| `.github/workflows/pages.yml` | holt Dashboard, Proxy-Client und die Theme-Repos, ruft `anpassen.sh` auf, veröffentlicht auf GitHub Pages |
 
 Der Code des Dashboards bleibt unverändert – beide Bibliotheken haben dieselbe Schnittstelle. Die Demo übernimmt den Stand von `main` des Dashboards bei jedem Push hierher, von Hand (Actions → *Live-Demo veröffentlichen* → *Run workflow*) und montags automatisch.
 
@@ -40,7 +54,7 @@ Lokal ausprobieren, ohne zu veröffentlichen:
 ```bash
 git clone https://github.com/Michdo93/Smart-Home-Dashboard site
 git clone https://github.com/Michdo93/js-openhab-proxy-client proxy-client
-./anpassen.sh site proxy-client
+./anpassen.sh site proxy-client theme-glas theme-eink
 cd site && python3 -m http.server 5173      # http://localhost:5173
 ```
 

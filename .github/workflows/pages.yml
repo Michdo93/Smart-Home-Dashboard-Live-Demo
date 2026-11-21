@@ -37,8 +37,20 @@ jobs:
           ref: 613da0d7e4ccceac593d85a8b95778371212602d
           path: proxy-client
 
-      - name: Auf den Proxy umstellen
-        run: ./anpassen.sh site proxy-client
+      - name: Theme glas holen
+        uses: actions/checkout@v7
+        with:
+          repository: Michdo93/smart-home-dashboard-theme-glas
+          path: theme-glas
+
+      - name: Theme eink holen
+        uses: actions/checkout@v7
+        with:
+          repository: Michdo93/smart-home-dashboard-theme-eink
+          path: theme-eink
+
+      - name: Auf den Proxy umstellen, Themes installieren
+        run: ./anpassen.sh site proxy-client theme-glas theme-eink
 
       - uses: actions/configure-pages@v6
 
